@@ -23,19 +23,26 @@
     var normalNotify = [10, 11, 14, 15, 16, 17];
     var lunchNotify = 12;
     var dinnerNotify = 18;
+    var lastNotify;
     function loop() {
         var date = new Date();
         var hour = date.getHours();
         if (hour in normalNotify) {
-            notify();
+            judgeNotify(hour);
         }
         if (hour == lunchNotify) {
-            notify();
+            judgeNotify(hour);
         }
         if (hour == dinnerNotify) {
-            notify();
+            judgeNotify(hour);
         }
         setTimeout("loop()", 1000);
+    }
+    function judgeNotify(hour){
+        if( lastNotify == undefined || lastNotify != hour ){
+            notify("get up");
+            lastNotify = hour;
+        }
     }
 
 </script>
