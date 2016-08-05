@@ -6,7 +6,42 @@
 </head>
 <body>
 <img src="img/background.jpg" style="height: 100%;width: 100%"/>
+
+<div>
+    <form>
+        <fieldset>
+            <label for="start_hour_select">start hour</label>
+            <select id="start_hour_select">
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <label for="end_hour_select">end hour</label>
+            <select id="end_hour_select">
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+            </select>
+            <label for="notify_minute">notify minute</label>
+            <input type="text" placeholder="0" id="notify_minute" value = "0">
+            <div>
+                <input type="checkbox" id="include_saturday">
+                <label class="label-inline" for="include_saturday">include_saturday</label>
+            </div>
+            <input class="button-primary" value="Send" id="save_minute">
+        </fieldset>
+    </form>
+</div>
 <script>
+    function init(){
+        document.getElementById("save_minute").onclick = saveNotifyMinute;
+        if (localStorage.getItem("notifyMinute") == undefined) {
+            localStorage.setItem("notifyMinute", 0);
+        }
+        document.getElementById("")
+    }
     window.addEventListener('load', function () {
         // 首先，让我们检查我们是否有权限发出通知
         // 如果没有，我们就请求获得权限
@@ -17,23 +52,27 @@
                 }
             });
         }
-
         loop();
     });
-    var normalNotify = [10, 11, 14, 15, 16, 17];
+    var normalNotify = [10, 11, 12, 14, 15, 16, 17, 18];
     var lunchNotify = 12;
     var dinnerNotify = 18;
+    var lastNotify = 0;
     function loop() {
         var date = new Date();
         var hour = date.getHours();
-        if (hour in normalNotify) {
-            notify();
-        }
-        if (hour == lunchNotify) {
-            notify();
-        }
-        if (hour == dinnerNotify) {
-            notify();
+        var minute = date.getMinutes();
+        if (minute == localStorage.getItem("notifyMinute") && lastNotify != hour) {
+            if (hour in normalNotify) {
+                var msg = "get up for a drink";
+                if (hour == lunchNotify) {
+                    msg = "go for a lunch";
+                } else if (hour == dinnerNotify) {
+                    msg = "go for a dinner";
+                }
+                notify(msg);
+                lastNotify = hour;
+            }
         }
         setTimeout("loop()", 1000);
     }

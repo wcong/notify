@@ -34,3 +34,17 @@ function notify(msg) {
         alert(msg);
     }
 }
+
+function saveNotifyMinute() {
+    var localNotifyMinute = document.getElementById("notify_minute").getAttribute("value");
+    if (isNaN(localNotifyMinute)) {
+        alert("not a number");
+        return;
+    }
+    var localNotifyMinuteInt = parseInt(localNotifyMinute);
+    if (localNotifyMinuteInt >= 0 && localNotifyMinuteInt <= 60) {
+        localStorage.setItem("notifyMinute", localNotifyMinuteInt);
+    } else {
+        alert("must be a minute");
+    }
+}
