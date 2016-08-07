@@ -25,7 +25,7 @@
                 <option value="21">21</option>
             </select>
             <label for="notify_minute">notify minute</label>
-            <input type="text" placeholder="0" id="notify_minute" value = "0">
+            <input type="text" placeholder="0" id="notify_minute" value="0">
             <div>
                 <input type="checkbox" id="include_saturday">
                 <label class="label-inline" for="include_saturday">include_saturday</label>
@@ -35,12 +35,20 @@
     </form>
 </div>
 <script>
-    function init(){
+    function init() {
         document.getElementById("save_minute").onclick = saveNotifyMinute;
         if (localStorage.getItem("notifyMinute") == undefined) {
             localStorage.setItem("notifyMinute", 0);
         }
-        document.getElementById("")
+        if (localStorage.getItem("startHour") == undefined) {
+            localStorage.setItem("startHour", startHour);
+        }
+        var startHour = localStorage.getItem("startHour");
+        for (option in document.getElementById("start_hour_select").options) {
+            if (option.text == startHour) {
+                option.selected = true;
+            }
+        }
     }
     window.addEventListener('load', function () {
         // 首先，让我们检查我们是否有权限发出通知
