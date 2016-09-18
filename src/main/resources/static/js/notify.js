@@ -15,19 +15,16 @@ function notify(msg) {
             if (Notification.permission !== status) {
                 Notification.permission = status;
             }
-
             // 如果用户同意了
             if (status === "granted") {
                 var n = new Notification(msg);
             }
-
             // 否则，我们可以让步的使用常规模态的 alert
             else {
                 alert(msg);
             }
         });
     }
-
     // 如果用户拒绝接受通知
     else {
         // 我们可以让步的使用常规模态的 alert
@@ -55,8 +52,27 @@ function saveNotifyMinute() {
     localStorage.setItem("endHour", parseInt(endHour));
 }
 
+var clickCount = 0;
+function showSetForm() {
+    clickCount += 1;
+    if (clickCount >= 3) {
+        var elementList = document.getElementsByClassName("set-form");
+        for (var i = 0; i < elementList.length; i++) {
+            elementList[i].style.display = "block";
+        }
+        clickCount = 0;
+    }
+}
+function hideSetForm() {
+    var elementList = document.getElementsByClassName("set-form");
+    for (var i = 0; i < elementList.length; i++) {
+        elementList[i].style.display = "none";
+    }
+}
 function init() {
     document.getElementById("save_minute").onclick = saveNotifyMinute;
+    document.getElementById("background").onclick = showSetForm;
+    document.getElementById("black-transparent").onclick = hideSetForm;
     if (localStorage.getItem("notifyMinute") == undefined) {
         localStorage.setItem("notifyMinute", 0);
     }

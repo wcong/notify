@@ -1,13 +1,15 @@
 <html>
 <head>
     <title>notify</title>
-    <link href="css/milligram.min.css" type="text/css">
+    <link href="css/milligram.min.css" type="text/css" rel="stylesheet">
     <script src="js/notify.js" type="text/javascript"></script>
 </head>
 <body>
-<img src="img/background.jpg" style="height: 100%;width: 100%"/>
-
-<div>
+<div id="background" style="height: 100%;width: 100%;"></div>
+<div id="black-transparent" class="set-form"
+     style="top:0;display:none;position: absolute;z-index: 999;height: 100%;width: 100%;background-color: black;opacity: 0.8;"></div>
+<div class="container set-form" id="set-form"
+     style="display: none;position: absolute;z-index: 1000;height: 60%;width: 60%;margin:6% 19% 0 19%;top:0;background-color: white">
     <form>
         <fieldset>
             <label for="start_hour_select">start hour</label>
@@ -26,7 +28,7 @@
             </select>
             <label for="notify_minute">notify minute</label>
             <input type="text" placeholder="0" id="notify_minute" value="0">
-            <input class="button-primary" value="Send" id="save_minute" type="button">
+            <input class="button-primary" value="save" id="save_minute" type="button">
         </fieldset>
     </form>
 </div>
