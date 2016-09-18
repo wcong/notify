@@ -50,6 +50,8 @@ function saveNotifyMinute() {
     var endHourSelect = document.getElementById("end_hour_select");
     var endHour = endHourSelect.options[endHourSelect.selectedIndex].value;
     localStorage.setItem("endHour", parseInt(endHour));
+    notify("saved");
+    hideSetForm();
 }
 
 var clickCount = 0;
