@@ -1,11 +1,37 @@
 <html>
 <head>
     <title>notify</title>
-    <link href="css/milligram.min.css" type="text/css">
+    <link href="css/milligram.min.css" type="text/css" rel="stylesheet">
     <script src="js/notify.js" type="text/javascript"></script>
 </head>
 <body>
-<img src="img/background.jpg" style="height: 100%;width: 100%"/>
+<div id="background" style="height: 100%;width: 100%;"></div>
+<div id="black-transparent" class="set-form"
+     style="top:0;display:none;position: absolute;z-index: 999;height: 100%;width: 100%;background-color: black;opacity: 0.8;"></div>
+<div class="container set-form" id="set-form"
+     style="display: none;position: absolute;z-index: 1000;height: 60%;width: 60%;margin:6% 19% 0 19%;top:0;background-color: white">
+    <form>
+        <fieldset>
+            <label for="start_hour_select">start hour</label>
+            <select id="start_hour_select">
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <label for="end_hour_select">end hour</label>
+            <select id="end_hour_select">
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+            </select>
+            <label for="notify_minute">notify minute</label>
+            <input type="text" placeholder="0" id="notify_minute" value="0">
+            <input class="button-primary" value="save" id="save_minute" type="button">
+        </fieldset>
+    </form>
+</div>
 <script>
     window.addEventListener('load', function () {
         // 首先，让我们检查我们是否有权限发出通知
@@ -17,34 +43,11 @@
                 }
             });
         }
-
+        init();
         loop();
     });
-    var normalNotify = [10, 11, 14, 15, 16, 17];
-    var lunchNotify = 12;
-    var dinnerNotify = 18;
-    var lastNotify;
-    function loop() {
-        var date = new Date();
-        var hour = date.getHours();
-        if (hour in normalNotify) {
-            judgeNotify(hour);
-        }
-        if (hour == lunchNotify) {
-            judgeNotify(hour);
-        }
-        if (hour == dinnerNotify) {
-            judgeNotify(hour);
-        }
-        setTimeout("loop()", 1000);
-    }
-    function judgeNotify(hour){
-        if( lastNotify == undefined || lastNotify != hour ){
-            notify("get up");
-            lastNotify = hour;
-        }
-    }
-
 </script>
 </body>
 </html>
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help
