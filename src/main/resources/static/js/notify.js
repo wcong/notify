@@ -36,7 +36,7 @@ function notify(msg) {
 }
 
 function saveNotifyMinute() {
-    var localNotifyMinute = document.getElementById("notify_minute").getAttribute("value");
+    var localNotifyMinute = document.getElementById("notify_minute").value;
     if (isNaN(localNotifyMinute)) {
         alert("not a number");
         return;
@@ -47,4 +47,65 @@ function saveNotifyMinute() {
     } else {
         alert("must be a minute");
     }
+    var startHourSelect = document.getElementById("start_hour_select");
+    var startHour = startHourSelect.options[startHourSelect.selectedIndex].value;
+    localStorage.setItem("startHour", parseInt(startHour));
+    var endHourSelect = document.getElementById("end_hour_select");
+    var endHour = endHourSelect.options[endHourSelect.selectedIndex].value;
+    localStorage.setItem("endHour", parseInt(endHour));
+}
+
+function init() {
+    document.getElementById("save_minute").onclick = saveNotifyMinute;
+    if (localStorage.getItem("notifyMinute") == undefined) {
+        localStorage.setItem("notifyMinute", 0);
+    }
+    document.getElementById("notify_minute").value = localStorage.getItem("notifyMinute");
+    if (localStorage.getItem("startHour") == undefined) {
+        localStorage.setItem("startHour", 10);
+    }
+    var startHour = localStorage.getItem("startHour");
+    for (option in document.getElementById("start_hour_select").options) {
+        if (option.text == startHour) {
+            option.selected = true;
+        }
+    }
+    if (localStorage.getItem("endHour") == undefined) {
+        localStorage.setItem("endHour", 18);
+    }
+    var endHour = localStorage.getItem("endHour");
+    for (option in document.getElementById("end_hour_select").options) {
+        if (option.text == endHour) {
+            option.selected = true;
+        }
+    }
+}
+
+
+var normalNotify = [10, 11, 12, 14, 15, 16, 17, 18];
+var lunchNotify = 12;
+var dinnerNotify = 18;
+var lastNotify = 0;
+
+
+function loop() {
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    console.log("loop");
+    if (minute == localStorage.getItem("notifyMinute") && lastNotify != hour) {
+        console.log("loop minute:" + minute);
+        if (hour >= localStorage.getItem("startHour") && hour <= localStorage.getItem("endHour")) {
+            var msg = "get up for a drink";
+            if (hour == lunchNotify) {
+                msg = "go for a lunch";
+            } else if (hour == dinnerNotify) {
+                msg = "go for a dinner";
+            }
+            console.log("loop notify message " + msg);
+            notify(msg);
+            lastNotify = hour;
+        }
+    }
+    setTimeout("loop()", 30000);
 }

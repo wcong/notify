@@ -26,30 +26,11 @@
             </select>
             <label for="notify_minute">notify minute</label>
             <input type="text" placeholder="0" id="notify_minute" value="0">
-            <div>
-                <input type="checkbox" id="include_saturday">
-                <label class="label-inline" for="include_saturday">include_saturday</label>
-            </div>
-            <input class="button-primary" value="Send" id="save_minute">
+            <input class="button-primary" value="Send" id="save_minute" type="button">
         </fieldset>
     </form>
 </div>
 <script>
-    function init() {
-        document.getElementById("save_minute").onclick = saveNotifyMinute;
-        if (localStorage.getItem("notifyMinute") == undefined) {
-            localStorage.setItem("notifyMinute", 0);
-        }
-        if (localStorage.getItem("startHour") == undefined) {
-            localStorage.setItem("startHour", startHour);
-        }
-        var startHour = localStorage.getItem("startHour");
-        for (option in document.getElementById("start_hour_select").options) {
-            if (option.text == startHour) {
-                option.selected = true;
-            }
-        }
-    }
     window.addEventListener('load', function () {
         // 首先，让我们检查我们是否有权限发出通知
         // 如果没有，我们就请求获得权限
@@ -60,30 +41,9 @@
                 }
             });
         }
+        init();
         loop();
     });
-    var normalNotify = [10, 11, 12, 14, 15, 16, 17, 18];
-    var lunchNotify = 12;
-    var dinnerNotify = 18;
-    var lastNotify = 0;
-    function loop() {
-        var date = new Date();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        if (minute == localStorage.getItem("notifyMinute") && lastNotify != hour) {
-            if (hour in normalNotify) {
-                var msg = "get up for a drink";
-                if (hour == lunchNotify) {
-                    msg = "go for a lunch";
-                } else if (hour == dinnerNotify) {
-                    msg = "go for a dinner";
-                }
-                notify(msg);
-                lastNotify = hour;
-            }
-        }
-        setTimeout("loop()", 1000);
-    }
 
 </script>
 </body>
