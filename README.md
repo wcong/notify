@@ -6,5 +6,5 @@ why? as a programer,i sit a lot,to avoid that,i use this program to alarm the lo
 3. it pop up
   ![popup](http://7xialg.com1.z0.glb.clouddn.com/notify.PNG)
 4. set you time
-5. wait for notify
+5. wait for notify        
   ![notify](http://7xialg.com1.z0.glb.clouddn.com/notifying.PNG)
