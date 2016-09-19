@@ -83,20 +83,12 @@ function init() {
         localStorage.setItem("startHour", 10);
     }
     var startHour = localStorage.getItem("startHour");
-    for (option in document.getElementById("start_hour_select").options) {
-        if (option.text == startHour) {
-            option.selected = true;
-        }
-    }
+    document.getElementById("start_hour_select").value = startHour;
     if (localStorage.getItem("endHour") == undefined) {
         localStorage.setItem("endHour", 18);
     }
     var endHour = localStorage.getItem("endHour");
-    for (option in document.getElementById("end_hour_select").options) {
-        if (option.text == endHour) {
-            option.selected = true;
-        }
-    }
+    document.getElementById("end_hour_select").value = endHour;
 }
 
 
